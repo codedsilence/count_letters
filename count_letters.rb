@@ -1,11 +1,25 @@
-def count_letters(s)
+def count_letters(letters)
   Hash[
-    s.delete(' ')
-     .split('')
-     .group_by{ |c| c }
-     .map{ |k, v| [k, v.size] }
-     .sort_by{ |k, v| [-v, k] }
+    letters
+     .delete(' ')
+     .chars
+     .group_by { |letter| letter } #
+     .map { |letter, count| [letter, count.size] } #runs on each array object
+     .sort_by{ |letter, count| [-count, letter] } #sort by descending count
   ]
 end
 
-print count_letters("lighthouse in the house...")
+def letter_positions(letters)
+	letters
+		.chars #breaks into indavidual characters 
+		.each.with_index 
+		.reduce({}) do |acc, (letter, position)| 
+			acc[letter] = [] unless acc.has_key?(letter)
+			acc[letter] << position
+			acc
+		end
+end
+
+p count_letters("lighthouse in the house...")
+
+p letter_positions("lighthouse in the house...")
